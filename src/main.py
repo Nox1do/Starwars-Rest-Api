@@ -9,7 +9,7 @@ from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
 from models import db, User
-from models import Characters, Planets
+from models import Characters, Planets, Favorites 
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -62,6 +62,61 @@ def get_planets():
 def single_planets(plan_id):
         planet = Planets.query.get(plan_id)
         return jsonify(planet.serialize())   
+
+
+#____________create favorite planets____________#
+  
+@app.route('/favorites/planets/<plan_id>', methods=['POST'])
+def add_planet_fav(planets_id):
+
+    body = request.get_json()
+    user_id = body["user_id"]
+
+    planetfav = Favorites(
+        user_id=user_id, plan_id=plan_id)
+    db.session.add(planetfav)
+    db.session.commit()
+    return jsonify("ok"), 201
+
+
+@app.route('/favorites/characters/<char_id>', methods=['POST'])
+def add_characters_fav(char_id):
+
+    body = request.get_json()
+    user_id = body["user_id"]
+   
+
+    characters_fav = Favorites(
+        user_id=user_id, char_id=char_id)
+    db.session.add(charactersfav)
+    db.session.commit()
+    return jsonify("ok"), 201
+
+#____________DELETE FAVORIT____________#
+
+@app.route('/favorites/planets/<plan_id>', methods=['DELETE'])
+def delete_planet_fav(plan_id):
+
+    planetfav = Favorites.query.get(plan_id)
+    if plan_id is None:
+        raise APIException("PLANET DELETE", 201)
+    db.session.delete(planetfav)
+    db.session.commit()
+
+    return jsonify(planetfav.serialize())
+
+
+@app.route('/favorites/characters/<char_id>', methods=['DELETE'])
+def delete_characters_fav(char_id):
+
+    charactersfav = Favorites.query.get(char_id)
+    if char_id is None:
+        raise APIException("PEOPLE DELETE", 201)
+    db.session.delete(charactersfav)
+    db.session.commit()
+
+    return jsonify(charactersfav.serialize())
+
 
 
 
