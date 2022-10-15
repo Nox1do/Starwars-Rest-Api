@@ -9,7 +9,7 @@ from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
 from models import db, User
-from models import Characters
+from models import Characters, Planets
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -30,7 +30,7 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
-@app.route('/user', methods=['GET'])
+@app.route('/users', methods=['GET'])
 def handle_hello():
     user = User.query.all()
     response_body = list(map(lambda user: user.serialize(), user))
@@ -38,17 +38,30 @@ def handle_hello():
     return jsonify(response_body), 200
 
 #_____________________Characters______________
-@app.route('/Characters', methods=['GET'])
+@app.route('/characters', methods=['GET'])
 def get_characters():
     characters = Characters.query.all()
     all_characters = list(map(lambda character: character.serialize(), characters))
     return jsonify(all_characters), 200
 
 #____________________Single Characters________
-@app.route('/Characters/<int:char_id>' , methods=['GET']) 
+@app.route('/characters/<int:char_id>' , methods=['GET']) 
 def single_character(char_id):
         character = Characters.query.get(char_id)
         return jsonify(character.serialize())   
+
+#____________________Planets________
+@app.route('/planets', methods=['GET'])
+def get_planets():
+    planets = Planets.query.all()
+    all_planets = list(map(lambda planet: planet.serialize(), planets))
+    return jsonify(all_planets), 200
+
+#____________________Single Planets________
+@app.route('/planets/<int:plan_id>' , methods=['GET']) 
+def single_planets(plan_id):
+        planet = Planets.query.get(plan_id)
+        return jsonify(planet.serialize())   
 
 
 
