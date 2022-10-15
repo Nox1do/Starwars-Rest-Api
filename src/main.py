@@ -63,6 +63,13 @@ def single_planets(plan_id):
         planet = Planets.query.get(plan_id)
         return jsonify(planet.serialize())   
 
+#________________Get Favorites___________
+@app.route('/users/favorites', methods=['GET'])
+def List_favorites():
+    favorites = Favorites.query.all()
+    all_favorites = list(map(lambda favorite: favorite.serialize(), favorites))
+    return jsonify(all_favorites)
+
 
 #____________create favorite planets____________#
   
@@ -78,7 +85,7 @@ def add_planet_fav(planets_id):
     db.session.commit()
     return jsonify("ok"), 201
 
-
+#_______create favorite characters(people)________#
 @app.route('/favorites/characters/<char_id>', methods=['POST'])
 def add_characters_fav(char_id):
 

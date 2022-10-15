@@ -9,7 +9,7 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     def __repr__(self):
-        return '<User %r>' % self.email
+        return '%r' % self.email
 
     def serialize(self):
         return {
@@ -32,7 +32,7 @@ class Characters(db.Model):
    
     # tell python how to print the class object on the console
     def __repr__(self):
-        return '<Characters %r>' % self.name
+        return '%r' % self.name
 
     # tell python how convert the class object into a dictionary ready to jsonify
     def serialize(self):
@@ -56,7 +56,7 @@ class Planets(db.Model):
 
 # tell python how to print the class object on the console
     def __repr__(self):
-        return '<Planets %r>' % self.name
+        return '%r' % self.name
 
     # tell python how convert the class object into a dictionary ready to jsonify
     def serialize(self):
