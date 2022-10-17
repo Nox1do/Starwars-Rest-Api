@@ -118,7 +118,7 @@ def delete_characters_fav(char_id):
 
     charactersfav = Favorites.query.get(char_id)
     if char_id is None:
-        raise APIException("PEOPLE DELETE", 201)
+        raise APIException("CHARACTER DELETE", 201)
     db.session.delete(charactersfav)
     db.session.commit()
 
