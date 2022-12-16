@@ -53,7 +53,7 @@ $ pipenv run upgrade  (to update your databse with the migrations)
 ```sh
 $ pipenv install (to install pip packages)
 $ pipenv run migrate (to create the database)
-$ pipenv run start (to start the flask webserver)
+$ pipenv run start (to start flask server)
 ```
 
 
